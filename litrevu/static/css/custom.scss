@@ -1,0 +1,11 @@
+$primary: #937663;
+
+@import "bootswatch/dist/united/variables";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+// Bootstrap core
+@import "bootstrap/scss/bootstrap";
+
+// Style du thème
+@import "bootswatch/dist/united/bootswatch";

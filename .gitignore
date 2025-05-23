@@ -1,3 +1,7 @@
 env
 db.sqlite3
 .vscode
+**/__pycache__/
+node_modules
+litrevu/static/css/custom.css
+litrevu/static/css/custom.css.map
