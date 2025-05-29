@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-danger text-center my-5">Confirmer la suppression du ticket</h1>
+
+<div class="container">
+  <div class="card bg-danger-subtle mb-3">
+    <p class="card-text p-2">Titre : {{ object.title }}</p>
+    <p class="card-text p-2">Description : {{ object.description }}</p>
+
+    <div class="p-2">
+      {% if object.image %}
+      <img
+        src="{{ object.image.url }}"
+        class="img-thumbnail"
+        style="max-width: 200px;" 
+        alt="Image du ticket"
+      />
+      {% endif %}
+    </div>
+      <div class="text-end p-2">
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Annuler</a>
+      </form>
+    </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}

@@ -16,19 +16,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth.views import LoginView
-from authentication.views import SignupView
-from reviews.views import home
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
+from reviews.views.home_views import home
+
+# Imports pour l'authetification
+from django.contrib.auth.views import LoginView
+from authentication.views import SignupView
+
+# Imports pour les tickets
+from reviews.views.ticket_view import TicketCreateView
+from reviews.views.ticket_view import TicketUpdateView
+from reviews.views.ticket_view import TicketDeleteView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Routes pour l'authetification
     path('login/', LoginView.as_view(template_name='authentication/login.html', redirect_authenticated_user=True), name='login'),
     path('signup/', SignupView.as_view(template_name='authentication/signup.html'), name='signup'),
-    path('home/', home, name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
+
+    path('home/', home, name='home'),
+
+    # Routes liées aux tickets
+    path('ticket/create/', TicketCreateView.as_view(), name='ticket-create'),
+    path('ticket/update/<int:pk>/', TicketUpdateView.as_view(), name='ticket-update'),
+    path('ticket/delete/<int:pk>/', TicketDeleteView.as_view(), name='ticket-delete'),
+
+    # --- (à venir) Routes pour authentication ---
+    # path('login/', ...)
+
+    # --- (à venir) Routes pour reviews ---
+    # path('review/create/', ...)
 ]
 
 if settings.DEBUG:
