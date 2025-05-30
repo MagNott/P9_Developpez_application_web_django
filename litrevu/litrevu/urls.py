@@ -31,6 +31,14 @@ from reviews.views.ticket_view import TicketCreateView
 from reviews.views.ticket_view import TicketUpdateView
 from reviews.views.ticket_view import TicketDeleteView
 
+# Imports pour les critiques
+from reviews.views.review_view import ReviewCreateView
+from reviews.views.review_view import ReviewUpdateView
+from reviews.views.review_view import ReviewDeleteView
+
+# Import pour la vue combinée créer ticket et critique en même temps
+from reviews.views.ticketandreview_view import ReviewAndTicketCreateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,11 +55,13 @@ urlpatterns = [
     path('ticket/update/<int:pk>/', TicketUpdateView.as_view(), name='ticket-update'),
     path('ticket/delete/<int:pk>/', TicketDeleteView.as_view(), name='ticket-delete'),
 
-    # --- (à venir) Routes pour authentication ---
-    # path('login/', ...)
+    # Routes pour reviews
+    path('review/create/<int:ticket_id>/', ReviewCreateView.as_view(), name='review-create'),
+    path('review/update/<int:pk>/', ReviewUpdateView.as_view(), name='review-update'),
+    path('review/delete/<int:pk>/', ReviewDeleteView.as_view(), name='review-delete'),
 
-    # --- (à venir) Routes pour reviews ---
-    # path('review/create/', ...)
+    # Routes combinée pour créer un ticket et une review en même temps
+    path('ticketandreview/create/', ReviewAndTicketCreateView.as_view(), name='ticketandreview_create'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-danger text-center my-5">
+  Confirmer la suppression de la critique
+</h1>
+
+<div class="container">
+  <div class="card bg-light border-primary mb-3">
+    <p class="card-text p-2">
+      Vous êtes en train de supprimer la critique en réponse à
+    </p>
+
+    <div class="card bg-secondary-subtle border-primary m-2 mb-3">
+      <p class="card-text p-2"><strong>Titre :</strong> {{ ticket.title }}</p>
+      <p class="card-text p-2">Description : {{ ticket.description }}</p>
+
+      <div class="p-2">
+        {% if ticket.image %}
+        <img
+          src="{{ object.image.url }}"
+          class="img-thumbnail"
+          style="max-width: 200px"
+          alt="Image du ticket"
+        />
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-danger-subtle border-danger mb-3">
+    <p class="card-text p-2">Titre de la critique : {{ object.headline }}</p>
+    <p class="card-text p-2">Note : {{ object.rating }}/5</p>
+    <p class="card-text p-2">Commentaire : {{ object.body }}</p>
+    <div class="text-end p-2">
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Annuler</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

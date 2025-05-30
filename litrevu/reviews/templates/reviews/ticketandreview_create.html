@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center my-5">Création d'un ticket</h1>
+
+  {% with ticket_form as form %}
+  {% include 'reviews/ticket/_form.html' %}
+{% endwith %}
+
+<h1 class="text-center my-5">Création d'une critique</h1>
+
+
+{% with review_form as form %}
+  {% include 'reviews/review/_form.html' %}
+{% endwith %}
+
+{% endblock content %}
