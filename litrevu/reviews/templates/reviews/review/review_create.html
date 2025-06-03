@@ -1,26 +1,33 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
+
 <h1 class="text-center my-5">Création d'une critique</h1>
 
-<div class="container">
-  <div class="card bg-light border-primary p-3 mb-3">
-    <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
-    <div class="card bg-secondary-subtle border-primary p-3 mb-3">
-    <p class="card-text p-2">Titre : {{ ticket.title }}</p>
-    <p class="card-text p-2">Description du ticket : {{ ticket.description }}</p> 
-    <p class="card-text p-2">
-      {% if ticket.image %}
-      <img src="{{ ticket.image.url }}" alt="Image du ticket">
-    {% else %}
-      <p>Aucune image</p>
-    {% endif %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="container">
+    <div class="card bg-light border-primary p-3 mb-3">
+      <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
+      <div class="card bg-secondary-subtle border-primary p-3 mb-3">
+        <p class="card-text p-2">Titre : {{ ticket.title }}</p>
+        <p class="card-text p-2">
+          Description du ticket : {{ ticket.description }}
         </p>
-</div>
+        <p class="card-text p-2">
+          {% if ticket.image %}
+          <img src="{{ ticket.image.url }}" alt="Image du ticket" />
+          {% else %}
+        </p>
+
+        <p>Aucune image</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
-</div>
 
-
-
-{% include 'reviews/review/_form.html' %}
+  {% include 'reviews/review/_form.html' with show_button=True %}
+</form>
 
 {% endblock content %}
 

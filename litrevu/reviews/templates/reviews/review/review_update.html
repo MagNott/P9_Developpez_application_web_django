@@ -1,16 +1,24 @@
-{% extends 'base.html' %}
-
-{% block content %}
-  <h1 class="text-center my-5">Modifier une critique</h1>
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center my-5">Modifier une critique</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
   <div class="container">
     <div class="card bg-light border-primary p-3 mb-3">
       <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
       <div class="card bg-secondary-subtle border-primary p-3 mb-3">
-      <p class="card-text p-2">Titre : {{ ticket.title }}</p>
-      <p class="card-text p-2">Description du ticket : {{ ticket.description }}</p> 
-      <p class="card-text p-2"></p>Image : {{ ticket.image.url }}</p>
-  </div>
+        <p class="card-text p-2">Titre : {{ ticket.title }}</p>
+        <p class="card-text p-2">
+          Description du ticket : {{ ticket.description }}
+        </p>
+        <p class="card-text p-2"></p>
+        {% if ticket.image and ticket.image.url %}
+        <img src="{{ ticket.image.url }}" alt="Image du ticket" />
+        {% else %}
+        <p>Aucune image</p>
+        {% endif %}
+      </div>
     </div>
   </div>
-  {% include 'reviews/review/_form.html' %}
+  {% include 'reviews/review/_form.html' with show_button=True %}
+</form>
 {% endblock content %}

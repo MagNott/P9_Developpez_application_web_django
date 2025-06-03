@@ -2,5 +2,8 @@
 
 {% block content %}
   <h1 class="text-center my-5">Modifier un ticket</h1>
-  {% include 'reviews/ticket/_form.html' %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %} 
+  {% include 'reviews/ticket/_form.html' with show_button=True %}
+  </form>
 {% endblock content %}
