@@ -2,7 +2,6 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from reviews.models.ticket_model import Ticket
 from reviews.forms.ticket_form import TicketForm

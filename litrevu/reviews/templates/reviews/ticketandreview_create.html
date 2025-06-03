@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="text-center my-5">Créer d'une critique</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% with ticket_form as form %}
+  {% include 'reviews/ticket/_form.html' with show_button=False %} 
+  {% endwith %} 
+
+  {% with review_form as form %}
+  {% include 'reviews/review/_form.html' with show_button=True %}
+  
+  {% endwith %}
+
+  {% if ticket_form.errors %}
+  <div class="alert alert-danger">Erreur dans le formulaire Ticket</div>
+  {% endif %}
+
+  {% if review_form.errors %}
+    <div class="alert alert-danger">Erreur dans le formulaire Review</div>
+  {% endif %}
+
+</form>
+
+{% endblock content %}

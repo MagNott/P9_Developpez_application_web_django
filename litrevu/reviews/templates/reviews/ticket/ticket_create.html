@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
-  <h1 class="text-center my-5">Création d'un ticket</h1>
-  {% include 'reviews/ticket/_form.html' %}
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center my-5">Création d'un ticket</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} 
+  {% include 'reviews/ticket/_form.html' with show_button=True %}
+</form>
 {% endblock content %}
-
 
 <!-- POUR AIDE -->
 <!-- <form method="post" enctype="multipart/form-data">

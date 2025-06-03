@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card bg-light border-primary p-3 mb-3">
+    <!-- Headline -->
+    <div class="mb-3">
+      <p class="card-text p-2">Titre :</p>
+      {{ form.headline }}
+    </div>
+
+    <!-- Rating avec les boutons radio en ligne -->
+    <div class="mb-3">
+      <p class="card-text p-2">Notes :</p>
+      {% for subwidget in form.rating %}
+      <div class="form-check form-check-inline">
+        {{ subwidget.tag }} {{ subwidget.choice_label }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Body -->
+    <div class="mb-3">
+      <p class="card-text p-2">Commentaire :</p>
+      {{ form.body }}
+    </div>
+
+    {% if show_button %}
+    <div class="text-end mt-3">
+      <button type="submit" class="btn btn-primary">Envoyer</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
