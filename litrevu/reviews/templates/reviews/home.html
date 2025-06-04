@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Bienvenue {{ request.user.username }} !</h2>
-  <p>Vous êtes bien connecté(e).</p>
+
+<div class="d-flex justify-content-center m-5">
+  <a href="{% url 'ticket-create' %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer un ticket</a>
+
+  <a href="{% url 'ticketandreview_create' %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer une critique</a>
+</div>
+
 {% endblock content %}
