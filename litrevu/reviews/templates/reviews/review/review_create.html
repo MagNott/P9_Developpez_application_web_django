@@ -7,7 +7,7 @@
   {% csrf_token %}
 
   <div class="container">
-    <div class="card bg-light border-primary p-3 mb-3">
+    <div class="card bg-primary-subtle border-primary p-3 mb-3">
       <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
       <div class="card bg-secondary-subtle border-primary p-3 mb-3">
         <p class="card-text p-2">Titre : {{ ticket.title }}</p>
@@ -16,7 +16,7 @@
         </p>
         <p class="card-text p-2">
           {% if ticket.image %}
-          <img src="{{ ticket.image.url }}" alt="Image du ticket" />
+          <img src="{{ ticket.image.url }}" alt="Image du ticket" width="50%"/>
           {% else %}
         </p>
 

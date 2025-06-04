@@ -20,6 +20,7 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
+import reviews.models.review_model
 from reviews.views.home_views import home
 
 # Imports pour l'authetification
@@ -38,6 +39,8 @@ from reviews.views.review_view import ReviewDeleteView
 
 # Import pour la vue combinée créer ticket et critique en même temps
 from reviews.views.ticketandreview_view import ReviewAndTicketCreateView
+
+from reviews.views.ticketandreview_readview import PostsView
 
 
 urlpatterns = [
@@ -62,6 +65,9 @@ urlpatterns = [
 
     # Routes combinée pour créer un ticket et une review en même temps
     path('ticketandreview/create/', ReviewAndTicketCreateView.as_view(), name='ticketandreview_create'),
+
+    # Posts qui affiche les tickets et les revues de la personne connectée
+    path('posts/', PostsView.as_view(), name='posts'),
 ]
 
 if settings.DEBUG:
