@@ -41,6 +41,8 @@ from reviews.views.review_view import ReviewDeleteView
 from reviews.views.ticketandreview_view import ReviewAndTicketCreateView
 
 from reviews.views.ticketandreview_readview import PostsView
+from reviews.views.followlist_view import FollowListView
+from reviews.views.followlist_view import UnfollowView
 
 
 urlpatterns = [
@@ -68,6 +70,10 @@ urlpatterns = [
 
     # Posts qui affiche les tickets et les revues de la personne connectée
     path('posts/', PostsView.as_view(), name='posts'),
+
+    # Abonnements qui affiche les abonnés et les abonnements
+    path('follow/', FollowListView.as_view(), name='follow'),
+    path('unfollow/<int:followed_user_id>/', UnfollowView.as_view(), name='unfollow'),
 ]
 
 if settings.DEBUG:

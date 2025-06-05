@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <h1 class="text-danger text-center my-5">
+    voulez-vous vraiment vous désabonner de {{ user_to_unfollow.username }}
+  </h1>
+
+  <div class="d-flex justify-content-center align-items-center gap-5">
+    <form method="post" class="mb-0">
+      {% csrf_token %}
+      <input type="hidden" name="user_id" value="{{ user_to_unfollow.id }}" />
+      <button type="submit" class="btn btn-danger">Désabonner</button>
+    </form>
+
+    <a href="{% url 'follow' %}" class="btn btn-secondary d-inline-block">Annuler</a>
+  </div>
+</div>
+
+{% endblock content %}
