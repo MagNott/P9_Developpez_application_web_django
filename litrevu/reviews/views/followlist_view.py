@@ -49,8 +49,6 @@ class UnfollowView(View):
 
         return render(request, 'reviews/unfollow.html', context)
 
-
-
     def post(self, request, *args, **kwargs):
         followed_user_id = request.POST.get("user_id")
 

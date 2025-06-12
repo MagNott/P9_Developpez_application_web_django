@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 import reviews.models.review_model
-from reviews.views.home_views import home
+from reviews.views.home_views import FeedView
 
 # Imports pour l'authetification
 from django.contrib.auth.views import LoginView
@@ -53,7 +53,7 @@ urlpatterns = [
     path('signup/', SignupView.as_view(template_name='authentication/signup.html'), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
-    path('home/', home, name='home'),
+    path('home/', FeedView.as_view(), name='home'),
 
     # Routes liées aux tickets
     path('ticket/create/', TicketCreateView.as_view(), name='ticket-create'),
