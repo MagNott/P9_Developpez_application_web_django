@@ -13,7 +13,7 @@ class PostsView(View):
         # Combiner les deux QuerySets
         combined = list(chain(tickets, reviews))
 
-        # Triez-les par timestamp dans l'ordre antéchronologique
+        # Trier par timestamp dans l'ordre antéchronologique
         combined.sort(key=attrgetter('time_created'), reverse=True)
 
         context = {

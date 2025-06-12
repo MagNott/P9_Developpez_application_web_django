@@ -2,10 +2,75 @@
 
 {% block content %}
 
+<div class="container">
+
+<h1>Bonjour {{ user }}</h1>
+
+
 <div class="d-flex justify-content-center m-5">
   <a href="{% url 'ticket-create' %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer un ticket</a>
 
   <a href="{% url 'ticketandreview_create' %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer une critique</a>
+</div>
+
+
+
+  {% for feed in feeds %}
+  <div class="card bg-primary-subtle border-primary p-3 mb-3">
+    {% if feed.content_type == "TICKET" %}
+    
+    <div class="d-flex justify-content-between">
+      <p class="card-text">{{ feed.user }} a publié un ticket</p>
+      <p class="card-text">{{ feed.time_created|date:"H:i, d F Y" }}</p>
+    </div>
+    <!-- Pour les tickets -->
+    <p class="card-text">{{ feed.title }} - {{ feed.description }}</p>
+
+    <p class="card-text">
+        {% if feed.ticket.image %}
+        <img
+          src="{{ feed.ticket.image.url }}"
+          alt="Image du ticket"
+          width="50%"
+        />
+      </p>
+      {% else %}
+      <p class="card-text fst-italic">Aucune image</p>
+      {% endif %}
+      <div class="d-flex justify-content-end m-3">
+        <a href="{% url 'review-create' feed.id %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer une critique</a>
+      </div>
+
+    {% else %}
+    <!-- Pour les revues -->
+    <div class="d-flex justify-content-between">
+      <p class="card-text">{{ feed.user }} a publié une critique</p>
+      <p class="card-text">{{ feed.time_created|date:"H:i, d F Y" }}</p>
+    </div>
+
+    <p>{{ feed.headline}} - {{ feed.rating }}/5</p>
+    <p>{{ feed.body }}</p>
+    <div class="card bg-secondary-subtle border-primary p-3 mb-3">
+      <p class="card-text">Ticket - {{ feed.ticket.user }}</p>
+      <p class="card-text">
+        {{ feed.ticket.title }} - {{ feed.ticket.description }}
+      </p>
+      <p class="card-text">
+        {% if feed.ticket.image %}
+        <img
+          src="{{ feed.ticket.image.url }}"
+          alt="Image du ticket"
+          width="50%"
+        />
+      </p>
+      {% else %}
+      <p class="card-text fst-italic">Aucune image</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+  {% endfor %}
 </div>
 
 {% endblock content %}
