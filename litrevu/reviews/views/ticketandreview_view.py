@@ -83,7 +83,7 @@ class PostsView(View):
         :param request: Requête HTTP GET envoyée par l'utilisateur.
         :return: Page HTML affichant la liste des posts (tickets + critiques) de l'utilisateur.
         """
-        
+
         tickets = Ticket.objects.filter(user=request.user)
         reviews = Review.objects.filter(user=request.user)
 
