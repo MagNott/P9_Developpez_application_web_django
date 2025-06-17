@@ -5,6 +5,13 @@ from .ticket_model import Ticket
 
 
 class Review(models.Model):
+    """
+    Modèle représentant une critique (review) d'un ticket.
+
+    Chaque critique est liée à un ticket et à un utilisateur.
+    Elle contient une note, un titre (headline), un corps de texte (body)
+    et une date de création automatique.
+    """
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         # validates that rating must be between 0 and 5
