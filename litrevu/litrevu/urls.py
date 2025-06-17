@@ -39,8 +39,8 @@ from reviews.views.review_view import ReviewDeleteView
 
 # Import pour la vue combinée créer ticket et critique en même temps
 from reviews.views.ticketandreview_view import ReviewAndTicketCreateView
+from reviews.views.ticketandreview_view import PostsView
 
-from reviews.views.ticketandreview_readview import PostsView
 from reviews.views.followlist_view import FollowListView
 from reviews.views.followlist_view import UnfollowView
 
