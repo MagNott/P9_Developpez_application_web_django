@@ -37,10 +37,17 @@
       {% else %}
       <p class="card-text fst-italic">Aucune image</p>
       {% endif %}
+      {% for review in user_reviews %}
+        {% if review.ticket.id == feed.id %}
+        <div class="d-flex justify-content-end m-3">
+          <a href="{% url 'review-update' review.id %}" class="btn btn-info m-4 bg-gradient btn-outline-secondary text-white">Modifier ta critique</a>
+        </div>
+        {% else %}
       <div class="d-flex justify-content-end m-3">
         <a href="{% url 'review-create' feed.id %}" class="btn btn-primary m-4 bg-gradient btn-outline-secondary text-white">Créer une critique</a>
       </div>
-
+        {% endif %}
+      {% endfor %}
     {% else %}
     <!-- Pour les revues -->
     <div class="d-flex justify-content-between">

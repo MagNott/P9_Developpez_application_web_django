@@ -38,9 +38,12 @@ class FeedView(LoginRequiredMixin, View):
         # Récupérer tous les utilisateurs suivis de l'utilisateur connecté
         followed_users = [f.followed_user for f in UserFollows.objects.filter(user=request.user)]
 
-        # Récupérer les tickets et review des utilisateurs suivis par l'utilisateur connecté
+        # Récupérer les tickets des utilisateurs suivis par l'utilisateur connecté
         tickets_followed = Ticket.objects.filter(user__in=followed_users)
-        reviews_followed = Review.objects.filter(user__in=followed_users)
+
+        # Récupérer les critiques écrites par des utilisateurs suivis
+        # uniquement si les tickets liés ont aussi été créés par des utilisateurs suivis
+        reviews_followed = Review.objects.filter(user__in=followed_users, ticket__user__in=followed_users)
 
         # Ajout d'un attribut pour discriminer le type d'objet dans la vue
         for ticket in tickets:
@@ -61,8 +64,15 @@ class FeedView(LoginRequiredMixin, View):
         # Trier par timestamp dans l'ordre antéchronologique
         combined.sort(key=attrgetter('time_created'), reverse=True)
 
+        # On récupère toutes les reviews de l'utilisateur connecté
+        # Cela permettra, dans le template, de vérifier si une critique existe
+        # déjà pour un ticket affiché et d’afficher soit le bouton "Créer une
+        # critique", soit "Modifier la critique" en conséquence
+        user_reviews = Review.objects.filter(user=request.user)
+
         context = {
             'feeds': combined,
+            "user_reviews": user_reviews,
         }
 
         return render(request, 'reviews/home.html', context)
