@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load star_tags %}
+{% block content %}
 
 <div class="container">
   <h1 class="text-center my-5">Vos posts</h1>
@@ -17,8 +19,9 @@
         {% if post.ticket.image %}
         <img
           src="{{ post.ticket.image.url }}"
+          class="img-fluid"
           alt="Image du ticket"
-          width="50%"
+          style="max-height: 300px; object-fit: contain;"
         />
       </p>
       {% else %}
@@ -32,7 +35,7 @@
       <p class="card-text">{{ post.time_created|date:"H:i, d F Y" }}</p>
     </div>
 
-    <p>{{ post.headline}} - {{ post.rating }}/5</p>
+    <p class="card-text"><strong>{{ post.headline}}</strong> - {% display_stars post.rating %}</p>
     <p>{{ post.body }}</p>
     <div class="card bg-secondary-subtle border-primary p-3 mb-3">
       <p class="card-text">Ticket - {{ post.ticket.user }}</p>
@@ -43,8 +46,9 @@
         {% if post.ticket.image %}
         <img
           src="{{ post.ticket.image.url }}"
+          class="img-fluid"
           alt="Image du ticket"
-          width="50%"
+          style="max-height: 300px; object-fit: contain;"
         />
       </p>
       {% else %}
@@ -57,20 +61,20 @@
       <div class="text-end m-3">
         {% if post.title %}
         <!-- C’est un Ticket -->
-        <a href="{% url 'ticket-update' post.id %}" class="btn btn-info btn-sm btn-outline-primary bg-gradient text-white">Modifier</a>
+        <a href="{% url 'ticket-update' post.id %}" class="btn btn-info btn-sm bg-gradient text-white">Modifier</a>
         {% else %}
         <!-- C’est une Review -->
-        <a href="{% url 'review-update' post.id %}" class="btn btn-info btn-sm btn-outline-primary bg-gradient text-white">Modifier</a>
+        <a href="{% url 'review-update' post.id %}" class="btn btn-info btn-sm bg-gradient text-white">Modifier</a>
         {% endif %}
         
       </div>
       <div class="text-end m-3">
         {% if post.title %}
         <!-- C’est un Ticket -->
-        <a href="{% url 'ticket-delete' post.id %}" class="btn btn-danger btn-sm btn-outline-primary bg-gradient text-white">Supprimer</a>
+        <a href="{% url 'ticket-delete' post.id %}" class="btn btn-danger btn-sm bg-gradient text-white">Supprimer</a>
         {% else %}
         <!-- C’est une Review -->
-        <a href="{% url 'review-delete' post.id %}" class="btn btn-danger btn-sm btn-outline-primary bg-gradient text-white">Supprimer</a>
+        <a href="{% url 'review-delete' post.id %}" class="btn btn-danger btn-sm bg-gradient text-white">Supprimer</a>
         {% endif %}
         
       </div>

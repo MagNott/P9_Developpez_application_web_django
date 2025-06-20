@@ -6,13 +6,17 @@
     <div class="card bg-light border-primary p-3 mb-3">
       <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
       <div class="card bg-secondary-subtle border-primary p-3 mb-3">
-        <p class="card-text p-2">Titre : {{ ticket.title }}</p>
+        <div class="d-flex justify-content-between">
+        <p class="card-text p-2">{{ ticket.user }} a demandé une critique</p>
         <p class="card-text p-2">
-          Description du ticket : {{ ticket.description }}
+          {{ ticket.time_created|date:"H:i, d F Y" }}
         </p>
+      </div>
+        <p class="card-text p-2"><strong>{{ ticket.title }}</strong></p>
+        <p class="card-text p-2">{{ ticket.description }}</p>
         <p class="card-text p-2"></p>
         {% if ticket.image and ticket.image.url %}
-        <img src="{{ ticket.image.url }}" alt="Image du ticket" width="50%"/>
+        <img src="{{ ticket.image.url }}" class="img-fluid" alt="Image du ticket" style="max-height: 300px; object-fit: contain;"/>
         {% else %}
         <p class="card-text fst-italic">Aucune image</p>
         {% endif %}

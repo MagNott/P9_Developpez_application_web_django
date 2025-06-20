@@ -5,9 +5,10 @@ from reviews.models import Ticket, Review
 from itertools import chain
 from operator import attrgetter
 from django.http import HttpRequest, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ReviewAndTicketCreateView(View):
+class ReviewAndTicketCreateView(LoginRequiredMixin, View):
     """
     Vue pour créer simultanément un ticket et une critique associée.
 
@@ -68,7 +69,7 @@ class ReviewAndTicketCreateView(View):
         })
 
 
-class PostsView(View):
+class PostsView(LoginRequiredMixin, View):
     """
     Vue pour afficher tous les posts (tickets et critiques) créés par l'utilisateur connecté.
 

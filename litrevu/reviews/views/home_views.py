@@ -70,9 +70,12 @@ class FeedView(LoginRequiredMixin, View):
         # critique", soit "Modifier la critique" en conséquence
         user_reviews = Review.objects.filter(user=request.user)
 
+        user_reviewed_ticket_ids = [review.ticket.id for review in user_reviews]
+
         context = {
             'feeds': combined,
             "user_reviews": user_reviews,
+            'user_reviewed_ticket_ids': user_reviewed_ticket_ids,
         }
 
         return render(request, 'reviews/home.html', context)
