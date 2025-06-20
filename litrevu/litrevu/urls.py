@@ -26,6 +26,7 @@ from reviews.views.home_views import FeedView
 # Imports pour l'authetification
 from django.contrib.auth.views import LoginView
 from authentication.views import SignupView
+from authentication.forms import CustomAuthenticationForm
 
 # Imports pour les tickets
 from reviews.views.ticket_view import TicketCreateView
@@ -49,7 +50,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Routes pour l'authetification
-    path('login/', LoginView.as_view(template_name='authentication/login.html', redirect_authenticated_user=True), name='login'),
+    path('login/', LoginView.as_view(template_name='authentication/login.html', authentication_form=CustomAuthenticationForm, redirect_authenticated_user=True), name='login'),
     path('signup/', SignupView.as_view(template_name='authentication/signup.html'), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
 

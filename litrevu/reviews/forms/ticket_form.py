@@ -7,10 +7,12 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = ['title', 'description', 'image']
         labels = {
-            'image': 'Image',
+            'title': 'Titre ',
+            'description' : 'Description ',
+            'image': 'Image ',
         }
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Titre du ticket', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'placeholder': 'Description du ticket', 'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control btn btn-secondary'}),
         }

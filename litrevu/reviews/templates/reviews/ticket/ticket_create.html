@@ -1,32 +1,8 @@
 {% extends 'base.html' %} {% block content %}
-<h1 class="text-center my-5">Création d'un ticket</h1>
+<h1 class="text-center my-5">Créer un ticket</h1>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %} 
   {% include 'reviews/ticket/_form.html' with show_button=True %}
 </form>
 {% endblock content %}
 
-<!-- POUR AIDE -->
-<!-- <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div>
-        {{ form.title.label_tag }}<br>
-        {{ form.title }}<br>
-        {{ form.title.errors }}
-    </div>
-
-    <div>
-        {{ form.description.label_tag }}<br>
-        {{ form.description }}<br>
-        {{ form.description.errors }}
-    </div>
-
-    <div>
-        {{ form.image.label_tag }}<br>
-        {{ form.image }}<br>
-        {{ form.image.errors }}
-    </div>
-
-    <button type="submit">Créer le ticket</button>
-</form> -->

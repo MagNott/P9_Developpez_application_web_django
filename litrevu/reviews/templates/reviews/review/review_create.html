@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1 class="text-center my-5">Création d'une critique</h1>
 
@@ -10,13 +9,17 @@
     <div class="card bg-primary-subtle border-primary p-3 mb-3">
       <p class="card-text p-2">Vous êtes en train de poster en réponse à</p>
       <div class="card bg-secondary-subtle border-primary p-3 mb-3">
-        <p class="card-text p-2">Titre : {{ ticket.title }}</p>
-        <p class="card-text p-2">
-          Description du ticket : {{ ticket.description }}
-        </p>
+        <div class="d-flex justify-content-between">
+          <p class="card-text p-2">{{ ticket.user }} a demandé une critique</p>
+          <p class="card-text p-2">
+            {{ ticket.time_created|date:"H:i, d F Y" }}
+          </p>
+        </div>
+        <p class="card-text p-2"><strong>{{ ticket.title }}</strong></p>
+        <p class="card-text p-2">{{ ticket.description }}</p>
         <p class="card-text p-2">
           {% if ticket.image %}
-          <img src="{{ ticket.image.url }}" alt="Image du ticket" width="50%"/>
+          <img src="{{ ticket.image.url }}" class="img-fluid" alt="Image du ticket" style="max-height: 300px; object-fit: contain;" />
           {% else %}
         </p>
 
@@ -30,28 +33,3 @@
 </form>
 
 {% endblock content %}
-
-<!-- POUR AIDE -->
-<!-- <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div>
-        {{ form.title.label_tag }}<br>
-        {{ form.title }}<br>
-        {{ form.title.errors }}
-    </div>
-
-    <div>
-        {{ form.description.label_tag }}<br>
-        {{ form.description }}<br>
-        {{ form.description.errors }}
-    </div>
-
-    <div>
-        {{ form.image.label_tag }}<br>
-        {{ form.image }}<br>
-        {{ form.image.errors }}
-    </div>
-
-    <button type="submit">Créer le ticket</button>
-</form> -->

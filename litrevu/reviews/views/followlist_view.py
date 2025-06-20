@@ -4,9 +4,10 @@ from reviews.models import UserFollows
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class FollowListView(View):
+class FollowListView(LoginRequiredMixin, View):
     """
     Vue permettant d'afficher la liste des abonnements et abonnés,
     de rechercher des utilisateurs, et d'ajouter un nouvel abonnement.
@@ -83,7 +84,7 @@ class FollowListView(View):
         return redirect("follow")
 
 
-class UnfollowView(View):
+class UnfollowView(LoginRequiredMixin, View):
     """
     Vue permettant d'afficher une confirmation de désabonnement
     et de supprimer un abonnement existant.

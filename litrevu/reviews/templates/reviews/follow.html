@@ -28,7 +28,7 @@
         {% endfor %}
     </ul>
 {% elif request.GET.search %}
-    <p>Aucun utilisateur trouvé pour "{{ request.GET.search }}"</p>
+    <p><em>Aucun utilisateur trouvé pour "{{ request.GET.search }}"</em></p>
 {% endif %}
 
 
