@@ -93,6 +93,17 @@ litrevu/
 - Vérification de conformité avec flake8
 - Fichier setup.cfg pour paramétrer black et flacke8
 
+##  Données de test
+
+Une base de données est intégrée afin de permettre les tests, voici les utilisateurs : 
+- magali (administrateur) : motpasseadmin1
+- magnott : motpasse456
+- magnott1 : motpasse4561
+- magnott2 : motpasse4562
+- magnott3 : motpasse4563
+- magnott4 : motpasse4564
+
+
 ## Auteur
 Projet réalisé par MagNott en juin 2025 dans le cadre du parcours développeur d'application Python chez OpenClassrooms.
 

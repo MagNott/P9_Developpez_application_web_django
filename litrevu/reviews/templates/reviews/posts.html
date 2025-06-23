@@ -16,12 +16,12 @@
     <p class="card-text">{{ post.title }} - {{ post.description }}</p>
 
     <p class="card-text">
-        {% if post.ticket.image %}
+        {% if post.image %}
         <img
-          src="{{ post.ticket.image.url }}"
+          src="{{ post.image.url }}"
           class="img-fluid"
           alt="Image du ticket"
-          style="max-height: 300px; object-fit: contain;"
+          style="max-height: 200px; object-fit: contain;"
         />
       </p>
       {% else %}
@@ -48,7 +48,7 @@
           src="{{ post.ticket.image.url }}"
           class="img-fluid"
           alt="Image du ticket"
-          style="max-height: 300px; object-fit: contain;"
+          style="max-height: 200px; object-fit: contain;"
         />
       </p>
       {% else %}
