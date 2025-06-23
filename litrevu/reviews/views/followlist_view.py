@@ -12,8 +12,10 @@ class FollowListView(LoginRequiredMixin, View):
     Vue permettant d'afficher la liste des abonnements et abonnés,
     de rechercher des utilisateurs, et d'ajouter un nouvel abonnement.
 
-    GET : Affiche la liste des abonnements, des abonnés et les résultats de recherche.
-    POST : Crée une relation de suivi entre l'utilisateur connecté et un autre utilisateur.
+    GET : Affiche la liste des abonnements, des abonnés et les résultats de
+    recherche.
+    POST : Crée une relation de suivi entre l'utilisateur connecté et un autre
+    utilisateur.
     """
 
     def get(self, request) -> HttpResponse:
@@ -41,45 +43,58 @@ class FollowListView(LoginRequiredMixin, View):
         User = get_user_model()
 
         # Récupérer les utilisateurs suivis par l'utilisateur connecté
-        followed_users = [f.followed_user for f in UserFollows.objects.filter(user=request.user)]
+        followed_users = [
+            f.followed_user
+            for f in UserFollows.objects.filter(user=request.user)
+        ]
 
-        # Recherche des utilisateurs dont le nom d'utilisateur contient la saisie,
+        # Recherche des utilisateurs dont le nom d'utilisateur contient la
+        # saisie,
         # en excluant l'utilisateur actuellement connecté
         search_results = []
         if search_query:
-            search_results = User.objects.filter(username__icontains=search_query).exclude(id=request.user.id)
+            search_results = User.objects.filter(
+                username__icontains=search_query
+            ).exclude(id=request.user.id)
 
         context = {
-            'followers': followers,
-            'following': following,
+            "followers": followers,
+            "following": following,
             "search_results": search_results,
-            'followed_users': followed_users
+            "followed_users": followed_users,
         }
 
-        return render(request, 'reviews/follow.html', context)
+        return render(request, "reviews/follow.html", context)
 
     def post(self, request, *args, **kwargs) -> HttpResponseRedirect:
         """
         Crée un nouvel abonnement pour l'utilisateur connecté.
 
         Args:
-            request (HttpRequest) : La requête HTTP contenant l'ID de l'utilisateur à suivre.
+            request (HttpRequest) : La requête HTTP contenant l'ID de
+            l'utilisateur à suivre.
 
         Returns:
             HttpResponseRedirect : Redirige vers la page de suivi.
         """
 
-        # Récupère l'identifiant de l'utilisateur à suivre depuis le formulaire envoyé en POST
+        # Récupère l'identifiant de l'utilisateur à suivre depuis le
+        # formulaire envoyé en POST
         followed_user_id = request.POST.get("user_id")
 
         # Récupère le modèle utilisateur personnalisé
         User = get_user_model()
 
-        # Recherche dans la base de données l'utilisateur correspondant à l'identifiant récupéré
+        # Recherche dans la base de données l'utilisateur correspondant à
+        # l'identifiant récupéré
         followed_user = User.objects.get(id=followed_user_id)
 
-        # Crée une nouvelle relation de suivi entre l'utilisateur connecté et l'utilisateur ciblé
-        UserFollows.objects.create(user=request.user, followed_user=followed_user)
+        # Crée une nouvelle relation de suivi entre l'utilisateur connecté et
+        # l'utilisateur ciblé
+        UserFollows.objects.create(
+            user=request.user,
+            followed_user=followed_user
+        )
 
         return redirect("follow")
 
@@ -95,7 +110,8 @@ class UnfollowView(LoginRequiredMixin, View):
 
     def get(self, request, followed_user_id: int) -> HttpResponse:
         """
-        Affiche une page demandant la confirmation pour se désabonner d'un utilisateur.
+        Affiche une page demandant la confirmation pour se désabonner d'un
+        utilisateur.
 
         Args:
             request (HttpRequest) : La requête HTTP.
@@ -111,18 +127,18 @@ class UnfollowView(LoginRequiredMixin, View):
         # Récupère l'utilisateur à ne plus suivre grâce à son identifiant
         user_to_unfollow = User.objects.get(id=followed_user_id)
 
-        context = {
-            "user_to_unfollow": user_to_unfollow
-        }
+        context = {"user_to_unfollow": user_to_unfollow}
 
-        return render(request, 'reviews/unfollow.html', context)
+        return render(request, "reviews/unfollow.html", context)
 
     def post(self, request, *args, **kwargs) -> HttpResponseRedirect:
         """
-        Supprime une relation de suivi entre l'utilisateur connecté et un autre utilisateur.
+        Supprime une relation de suivi entre l'utilisateur connecté et
+        un autre utilisateur.
 
         Args:
-            request (HttpRequest) : La requête HTTP contenant l'ID de l'utilisateur à désabonner.
+            request (HttpRequest) : La requête HTTP contenant l'ID de
+            l'utilisateur à désabonner.
 
         Returns:
             HttpResponseRedirect : Redirige vers la page de suivi.
@@ -131,8 +147,11 @@ class UnfollowView(LoginRequiredMixin, View):
         # Récupère l'id de l'utilisateur à ne plus suivre
         followed_user_id = request.POST.get("user_id")
 
-        # prépare la requête pour pour retrouver la relation de suivi entre l'utilisateur connecté et l'utilisateur ciblé
-        follow_delete = UserFollows.objects.filter(user=request.user, followed_user__id=followed_user_id)
+        # prépare la requête pour pour retrouver la relation de suivi entre
+        # l'utilisateur connecté et l'utilisateur ciblé
+        follow_delete = UserFollows.objects.filter(
+            user=request.user, followed_user__id=followed_user_id
+        )
 
         # Si la relation de suivi existe, on la supprime
         if (follow_delete).exists():

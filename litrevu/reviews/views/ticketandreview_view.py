@@ -13,12 +13,14 @@ class ReviewAndTicketCreateView(LoginRequiredMixin, View):
     Vue pour créer simultanément un ticket et une critique associée.
 
     Cette vue permet à un utilisateur authentifié de remplir deux formulaires
-    (un pour le ticket, un pour la critique) sur une seule page, et de les enregistrer
-    si les deux sont valides.
+    (un pour le ticket, un pour la critique) sur une seule page, et de les
+    enregistrer si les deux sont valides.
     """
+
     def get(self, request: HttpRequest) -> HttpResponse:
         """
-        Affiche un formulaire vide pour créer un ticket et une critique en même temps.
+        Affiche un formulaire vide pour créer un ticket et une critique en
+        même temps.
 
         :param request: Requête HTTP GET envoyée par l'utilisateur.
         :return: Page HTML avec les deux formulaires vides.
@@ -27,10 +29,11 @@ class ReviewAndTicketCreateView(LoginRequiredMixin, View):
         ticket_form = TicketForm()
         review_form = ReviewForm()
 
-        return render(request, 'reviews/ticketandreview_create.html', {
-            'ticket_form': ticket_form,
-            'review_form': review_form
-        })
+        return render(
+            request,
+            "reviews/ticketandreview_create.html",
+            {"ticket_form": ticket_form, "review_form": review_form},
+        )
 
     def post(self, request: HttpRequest) -> HttpResponse:
         """
@@ -38,10 +41,13 @@ class ReviewAndTicketCreateView(LoginRequiredMixin, View):
 
         Si les deux formulaires sont valides :
         - Crée le ticket en l'associant à l'utilisateur connecté.
-        - Crée la critique en l'associant à l'utilisateur connecté et au ticket.
+        - Crée la critique en l'associant à l'utilisateur connecté et
+        au ticket.
 
-        :param request: Requête HTTP POST contenant les données des deux formulaires.
-        :return: Redirection vers la page d'accueil si succès, sinon réaffiche les formulaires avec erreurs.
+        :param request: Requête HTTP POST contenant les données des deux
+        formulaires.
+        :return: Redirection vers la page d'accueil si succès, sinon réaffiche
+        les formulaires avec erreurs.
         """
 
         ticket_form = TicketForm(request.POST, request.FILES)
@@ -61,28 +67,33 @@ class ReviewAndTicketCreateView(LoginRequiredMixin, View):
             # Cela permet d’ajouter manuellement des champs
             # comme user ou ticket (FK) avant de faire le save()
 
-            return redirect('home')
+            return redirect("home")
 
-        return render(request, 'reviews/ticketandreview_create.html', {
-            'ticket_form': ticket_form,
-            'review_form': review_form
-        })
+        return render(
+            request,
+            "reviews/ticketandreview_create.html",
+            {"ticket_form": ticket_form, "review_form": review_form},
+        )
 
 
 class PostsView(LoginRequiredMixin, View):
     """
-    Vue pour afficher tous les posts (tickets et critiques) créés par l'utilisateur connecté.
+    Vue pour afficher tous les posts (tickets et critiques) créés par
+    l'utilisateur connecté.
 
-    Cette vue combine les tickets et les critiques de l'utilisateur, puis les trie par date
+    Cette vue combine les tickets et les critiques de l'utilisateur, puis les
+    trie par date
     de création de manière antéchronologique (du plus récent au plus ancien).
     """
+
     def get(self, request: HttpRequest) -> HttpResponse:
         """
         Récupère tous les tickets et critiques créés par l'utilisateur,
         les fusionne et les trie par date de création (décroissante).
 
         :param request: Requête HTTP GET envoyée par l'utilisateur.
-        :return: Page HTML affichant la liste des posts (tickets + critiques) de l'utilisateur.
+        :return: Page HTML affichant la liste des posts (tickets + critiques)
+        de l'utilisateur.
         """
 
         tickets = Ticket.objects.filter(user=request.user)
@@ -92,10 +103,10 @@ class PostsView(LoginRequiredMixin, View):
         combined = list(chain(tickets, reviews))
 
         # Trier par timestamp dans l'ordre antéchronologique
-        combined.sort(key=attrgetter('time_created'), reverse=True)
+        combined.sort(key=attrgetter("time_created"), reverse=True)
 
         context = {
-            'posts': combined,
+            "posts": combined,
         }
 
-        return render(request, 'reviews/posts.html', context)
+        return render(request, "reviews/posts.html", context)

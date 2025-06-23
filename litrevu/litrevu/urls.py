@@ -14,13 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
-import reviews.models.review_model
 from reviews.views.home_views import FeedView
 
 # Imports pour l'authetification
@@ -47,35 +47,48 @@ from reviews.views.followlist_view import UnfollowView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # Routes pour l'authetification
-    path('login/', LoginView.as_view(template_name='authentication/login.html', authentication_form=CustomAuthenticationForm, redirect_authenticated_user=True), name='login'),
-    path('signup/', SignupView.as_view(template_name='authentication/signup.html'), name='signup'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-
-    path('home/', FeedView.as_view(), name='home'),
-
+    path("admin/", admin.site.urls),
+    # Routes pour l'authentification
+    path(
+        "login/",
+        LoginView.as_view(
+            template_name="authentication/login.html",
+            authentication_form=CustomAuthenticationForm,
+            redirect_authenticated_user=True,
+        ),
+        name="login",
+    ),
+    path(
+        "signup/",
+        SignupView.as_view(template_name="authentication/signup.html"),
+        name="signup",
+    ),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("home/", FeedView.as_view(), name="home"),
     # Routes liées aux tickets
-    path('ticket/create/', TicketCreateView.as_view(), name='ticket-create'),
-    path('ticket/update/<int:pk>/', TicketUpdateView.as_view(), name='ticket-update'),
-    path('ticket/delete/<int:pk>/', TicketDeleteView.as_view(), name='ticket-delete'),
-
+    path("ticket/create/", TicketCreateView.as_view(), name="ticket-create"),
+    path("ticket/update/<int:pk>/", TicketUpdateView.as_view(), name="ticket-update"),  # noqa: E501
+    path("ticket/delete/<int:pk>/", TicketDeleteView.as_view(), name="ticket-delete"),  # noqa: E501
     # Routes pour reviews
-    path('review/create/<int:ticket_id>/', ReviewCreateView.as_view(), name='review-create'),
-    path('review/update/<int:pk>/', ReviewUpdateView.as_view(), name='review-update'),
-    path('review/delete/<int:pk>/', ReviewDeleteView.as_view(), name='review-delete'),
-
+    path(
+        "review/create/<int:ticket_id>/",
+        ReviewCreateView.as_view(),
+        name="review-create",
+    ),
+    path("review/update/<int:pk>/", ReviewUpdateView.as_view(), name="review-update"),  # noqa: E501
+    path("review/delete/<int:pk>/", ReviewDeleteView.as_view(), name="review-delete"),  # noqa: E501
     # Routes combinée pour créer un ticket et une review en même temps
-    path('ticketandreview/create/', ReviewAndTicketCreateView.as_view(), name='ticketandreview_create'),
-
+    path(
+        "ticketandreview/create/",
+        ReviewAndTicketCreateView.as_view(),
+        name="ticketandreview_create",
+    ),
     # Posts qui affiche les tickets et les revues de la personne connectée
-    path('posts/', PostsView.as_view(), name='posts'),
-
+    path("posts/", PostsView.as_view(), name="posts"),
     # Abonnements qui affiche les abonnés et les abonnements
-    path('follow/', FollowListView.as_view(), name='follow'),
-    path('unfollow/<int:followed_user_id>/', UnfollowView.as_view(), name='unfollow'),
+    path("follow/", FollowListView.as_view(), name="follow"),
+    path("unfollow/<int:followed_user_id>/", UnfollowView.as_view(), name="unfollow"),  # noqa: E501
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # noqa: E501

@@ -19,16 +19,17 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     Attributs :
         model (Model) : Le modèle Review à créer.
         form_class (Form) : Le formulaire utilisé pour créer une Review.
-        template_name (str) : Le template utilisé pour l'affichage du formulaire.
+        template_name (str) : Le template utilisé pour l'affichage du
+        formulaire.
         title (str) : Titre de la page (utilisable dans le template).
         success_url (str) : URL de redirection après validation du formulaire.
     """
 
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/review/review_create.html'
-    title = 'Ajouter une critique'
-    success_url = reverse_lazy('home')
+    template_name = "reviews/review/review_create.html"
+    title = "Ajouter une critique"
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form: ReviewForm) -> HttpResponse:
         """
@@ -42,7 +43,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
             HttpResponse: La réponse HTTP redirigeant vers success_url.
         """
         form.instance.user = self.request.user
-        ticket_id = self.kwargs['ticket_id']  # récupère depuis l’URL
+        ticket_id = self.kwargs["ticket_id"]  # récupère depuis l’URL
         form.instance.ticket_id = ticket_id
 
         return super().form_valid(form)
@@ -55,30 +56,32 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
             dict: Le contexte enrichi avec le ticket associé.
         """
         context = super().get_context_data(**kwargs)
-        ticket_id = self.kwargs['ticket_id']
+        ticket_id = self.kwargs["ticket_id"]
         ticket = Ticket.objects.get(id=ticket_id)
-        context['ticket'] = ticket
+        context["ticket"] = ticket
 
         return context
 
 
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     """
-    Vue permettant à un utilisateur authentifié de modifier une critique (Review)
-    qu'il a lui-même rédigée.
+    Vue permettant à un utilisateur authentifié de modifier une critique
+    (Review) qu'il a lui-même rédigée.
 
     Attributs :
         model (Model) : Le modèle Review à modifier.
         form_class (Form) : Le formulaire utilisé pour la modification.
-        template_name (str) : Le template utilisé pour l'affichage du formulaire.
+        template_name (str) : Le template utilisé pour l'affichage du
+        formulaire.
         title (str) : Titre de la page (utilisable dans le template).
         success_url (str) : URL de redirection après validation.
     """
+
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/review/review_update.html'
-    title = 'Modifier une critique'
-    success_url = reverse_lazy('home')
+    template_name = "reviews/review/review_update.html"
+    title = "Modifier une critique"
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form: ReviewForm) -> HttpResponse:
         """
@@ -100,7 +103,8 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
         Limite l'édition aux critiques appartenant à l'utilisateur connecté.
 
         Returns:
-            QuerySet: Les Reviews que l'utilisateur connecté est autorisé à modifier.
+            QuerySet: Les Reviews que l'utilisateur connecté est autorisé à
+            modifier.
         """
 
         return Review.objects.filter(user=self.request.user)
@@ -115,27 +119,29 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
         """
         context = super().get_context_data(**kwargs)
         ticket = self.object.ticket
-        context['ticket'] = ticket
+        context["ticket"] = ticket
 
         return context
 
 
 class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     """
-    Vue permettant à un utilisateur authentifié de supprimer une critique (Review)
-    qu'il a lui-même rédigée.
+    Vue permettant à un utilisateur authentifié de supprimer une critique
+    (Review) qu'il a lui-même rédigée.
 
     Attributs :
         model (Model) : Le modèle Review à supprimer.
-        template_name (str) : Le template utilisé pour afficher la confirmation.
-        success_url (str) : L'URL vers laquelle l'utilisateur est redirigé après la suppression.
+        template_name (str) : Le template utilisé pour afficher la
+        confirmation.
+        success_url (str) : L'URL vers laquelle l'utilisateur est redirigé
+        après la suppression.
     """
 
     model = Review
-    template_name = 'reviews/review/review_confirm_delete.html'
-    success_url = reverse_lazy('home')
+    template_name = "reviews/review/review_confirm_delete.html"
+    success_url = reverse_lazy("home")
 
-    def get_queryset(self)  -> QuerySet:
+    def get_queryset(self) -> QuerySet:
         """
         Restreint l'accès à la suppression uniquement aux critiques
         appartenant à l'utilisateur connecté.
@@ -156,6 +162,6 @@ class ReviewDeleteView(LoginRequiredMixin, DeleteView):
         """
         context = super().get_context_data(**kwargs)
         ticket = self.object.ticket
-        context['ticket'] = ticket
+        context["ticket"] = ticket
 
         return context
