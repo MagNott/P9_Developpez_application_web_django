@@ -16,14 +16,18 @@ class Ticket(models.Model):
 
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
-    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         """
-        Surcharge de la méthode save pour redimensionner l'image avant sauvegarde,
-        si une image est présente. La taille maximale est de 800x800 pixels.
+        Surcharge de la méthode save pour redimensionner l'image avant
+        sauvegarde, si une image est présente. La taille maximale est
+        de 800x800 pixels.
         """
         super().save(*args, **kwargs)
 
