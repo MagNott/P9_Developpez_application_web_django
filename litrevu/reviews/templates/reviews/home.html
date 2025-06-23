@@ -1,8 +1,6 @@
 {% extends 'base.html' %} {% load star_tags %} {% block content %}
 
 <div class="container">
-  <h1>Bonjour {{ user }}</h1>
-
   <div class="d-flex justify-content-center m-5">
     <a
       href="{% url 'ticket-create' %}"
@@ -31,12 +29,12 @@
       </p>
 
       <p class="card-text">
-        {% if feed.ticket.image %}
+        {% if feed.image %}
         <img
-          src="{{ feed.ticket.image.url }}"
+          src="{{ feed.image.url }}"
           class="img-fluid"
           alt="Image du ticket"
-          style="max-height: 300px; object-fit: contain"
+          style="max-height: 200px; object-fit: contain"
         />
       </p>
         {% else %}
@@ -85,7 +83,7 @@
             src="{{ feed.ticket.image.url }}"
             class="img-fluid"
             alt="Image du ticket"
-            style="max-height: 300px; object-fit: contain"
+            style="max-height: 200px; object-fit: contain"
             />
           </p>
         {% else %}
