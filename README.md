@@ -64,10 +64,11 @@ litrevu/
 │   └── urls.py            # Routage principal
 │
 ├── reviews/               # App principale (tickets,critiques, feed...)
-│   ├── models.py
+│   ├── models/            # A l'intérieur des dossiers suivants, il y a un fichier par entité
 │   ├── views/
-│   ├── forms.py
+│   ├── forms/             # Un fichier pour review et un pour ticket pour la personnalisation du formualaire 
 │   ├── templates/
+│   ├── templatetags/      # Gestion de l'affichage des étoiles pour la notation
 │
 ├── static/                # Fichiers statiques (CSS, images)
 ├── templates/             # Templates globaux (base.html, etc.)
